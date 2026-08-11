@@ -1,7 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { content, type ContentItem } from "@/lib/content";
 import {
   DiscoveryGrid,
@@ -10,6 +10,7 @@ import {
 } from "@/components/DiscoveryGrid";
 import { Spotlight } from "@/components/Spotlight";
 import { DetailView } from "@/components/DetailView";
+import { Toast } from "@/components/Toast";
 
 const FILTER_LABELS: Record<FilterChip, string> = {
   all: "All",
@@ -26,6 +27,14 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<ContentItem | null>(null);
   const [litIds, setLitIds] = useState<Set<string>>(new Set());
+  const [toast, setToast] = useState<string | null>(null);
+
+  const dismissToast = useCallback(() => setToast(null), []);
+  const showToast = useCallback((message: string) => {
+    setToast(null);
+    // Allow remount even if the same message is shown twice
+    window.requestAnimationFrame(() => setToast(message));
+  }, []);
 
   useEffect(() => {
     const t = window.setTimeout(() => setLoading(false), 400);
@@ -115,7 +124,13 @@ export default function HomePage() {
         />
       </Spotlight>
 
-      <DetailView item={selected} onClose={() => setSelected(null)} />
+      <DetailView
+        item={selected}
+        onClose={() => setSelected(null)}
+        onAction={showToast}
+      />
+
+      <Toast message={toast} onDismiss={dismissToast} />
     </main>
   );
 }

@@ -84,8 +84,11 @@ export function PersonCard({
         <button
           type="button"
           onClick={(e) => {
+            e.preventDefault();
             e.stopPropagation();
+            onSelect();
           }}
+          onPointerDown={(e) => e.stopPropagation()}
           className="absolute bottom-4 right-4 z-20 rounded-full border border-border-hairline
             bg-bg-base/90 px-3 py-1 text-[11px] font-medium text-text-primary
             transition-colors hover:border-accent/40 hover:bg-accent-dim focus-ring"

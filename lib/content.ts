@@ -50,12 +50,12 @@ export type ContentItem =
   | HappeningItem
   | CircleItem;
 
-/** Topical Flickr-backed placeholders; lock keeps each card stable across reloads. */
-const img = (imageQuery: string, lock: number) =>
-  `https://loremflickr.com/800/800/${imageQuery}?lock=${lock}`;
+/** Curated Unsplash photos — specific shot IDs, not keyword search. */
+const photo = (id: string) =>
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&h=800&q=70`;
 
 export const content: ContentItem[] = [
-  // Places (6)
+  // Places
   {
     id: "place-1",
     kind: "place",
@@ -64,7 +64,7 @@ export const content: ContentItem[] = [
     tag: "0.6 KM",
     weight: 4,
     imageQuery: "bookstore,cafe,interior",
-    image: img("bookstore,cafe,interior", 11),
+    image: photo("1521587760476-6c12a4b040da"), // bookstore shelves
     neighborhood: "Koregaon Park",
     category: "Cafe · Bookstore",
   },
@@ -76,7 +76,7 @@ export const content: ContentItem[] = [
     tag: "1.2 KM",
     weight: 1,
     imageQuery: "park,garden,path",
-    image: img("park,garden,path", 12),
+    image: photo("1441974231531-c6227db76b6e"), // forest park path
     neighborhood: "Koregaon Park",
     category: "Park",
   },
@@ -88,7 +88,7 @@ export const content: ContentItem[] = [
     tag: "2.4 KM",
     weight: 2,
     imageQuery: "street,food,night",
-    image: img("street,food,night", 13),
+    image: photo("1555939594-58d7cb561ad1"), // night street food
     neighborhood: "FC Road",
     category: "Street",
   },
@@ -100,7 +100,7 @@ export const content: ContentItem[] = [
     tag: "4.1 KM",
     weight: 1,
     imageQuery: "shopping,mall",
-    image: img("shopping,mall", 14),
+    image: photo("1441986300917-64674bd600d8"), // mall interior
     neighborhood: "Viman Nagar",
     category: "Mall",
   },
@@ -112,7 +112,7 @@ export const content: ContentItem[] = [
     tag: "5.8 KM",
     weight: 3,
     imageQuery: "hill,sunset,viewpoint",
-    image: img("hill,sunset,viewpoint", 15),
+    image: photo("1506905925346-21bda4d32df4"), // mountain sunset
     neighborhood: "Baner",
     category: "Viewpoint",
   },
@@ -124,12 +124,12 @@ export const content: ContentItem[] = [
     tag: "0.9 KM",
     weight: 1,
     imageQuery: "coffee,cafe,cup",
-    image: img("coffee,cafe,cup", 16),
+    image: photo("1495474472287-4d71bcdd2085"), // coffee cup
     neighborhood: "Koregaon Park",
     category: "Coffee",
   },
 
-  // Bites (6)
+  // Bites
   {
     id: "bite-1",
     kind: "bite",
@@ -138,7 +138,7 @@ export const content: ContentItem[] = [
     tag: "₹180",
     weight: 2,
     imageQuery: "misal,spicy,curry",
-    image: img("misal,spicy,curry", 21),
+    image: photo("1585937421614-4a9987e7e018"), // Indian curry bowl
     cuisine: "Maharashtrian",
     priceLevel: 1,
   },
@@ -150,7 +150,7 @@ export const content: ContentItem[] = [
     tag: "₹2,400",
     weight: 4,
     imageQuery: "sushi,japanese,food",
-    image: img("sushi,japanese,food", 22),
+    image: photo("1579871494447-9811cf80d66c"), // sushi platter
     cuisine: "Japanese",
     priceLevel: 4,
   },
@@ -162,7 +162,7 @@ export const content: ContentItem[] = [
     tag: "₹40",
     weight: 1,
     imageQuery: "vadapav,streetfood,india",
-    image: img("vadapav,streetfood,india", 23),
+    image: photo("1606491956689-2ea866880c84"), // Indian street snack
     cuisine: "Street",
     priceLevel: 1,
   },
@@ -174,7 +174,7 @@ export const content: ContentItem[] = [
     tag: "₹650",
     weight: 1,
     imageQuery: "pizza,italian,food",
-    image: img("pizza,italian,food", 24),
+    image: photo("1513104890138-7c749659a591"), // pizza
     cuisine: "Italian",
     priceLevel: 3,
   },
@@ -186,7 +186,7 @@ export const content: ContentItem[] = [
     tag: "₹450",
     weight: 3,
     imageQuery: "thali,indian,food",
-    image: img("thali,indian,food", 25),
+    image: photo("1546833999-b9f581a1996d"), // Indian thali-style spread
     cuisine: "Maharashtrian",
     priceLevel: 2,
   },
@@ -198,12 +198,12 @@ export const content: ContentItem[] = [
     tag: "₹120",
     weight: 1,
     imageQuery: "gelato,icecream,dessert",
-    image: img("gelato,icecream,dessert", 26),
+    image: photo("1563805042-7684c019e1cb"), // ice cream
     cuisine: "Dessert",
     priceLevel: 1,
   },
 
-  // People (6)
+  // People — real portrait photos
   {
     id: "person-1",
     kind: "person",
@@ -212,7 +212,7 @@ export const content: ContentItem[] = [
     tag: "12 MUTUAL",
     weight: 2,
     imageQuery: "portrait,woman,photographer",
-    image: img("portrait,woman,photographer", 31),
+    image: photo("1494790108377-be9c29b29330"),
     username: "@ananya.frames",
     mutuals: 12,
     bio: "Shooting Pune after dark. Always looking for a second lens on the night walk.",
@@ -227,7 +227,7 @@ export const content: ContentItem[] = [
     tag: "4 MUTUAL",
     weight: 1,
     imageQuery: "portrait,man,runner",
-    image: img("portrait,man,runner", 32),
+    image: photo("1507003211169-0a1dd7228f2d"),
     username: "@rohan.runs",
     mutuals: 4,
     bio: "Sunrise loops on Baner Hill. Pace over PR.",
@@ -242,7 +242,7 @@ export const content: ContentItem[] = [
     tag: "28 MUTUAL",
     weight: 4,
     imageQuery: "portrait,woman,chef",
-    image: img("portrait,woman,chef", 33),
+    image: photo("1438761681033-6461ffad8d80"),
     username: "@meeracooks",
     mutuals: 28,
     bio: "Seasonal menus across Kalyani Nagar kitchens. DM for the next seat.",
@@ -257,7 +257,7 @@ export const content: ContentItem[] = [
     tag: "7 MUTUAL",
     weight: 1,
     imageQuery: "portrait,man,music",
-    image: img("portrait,man,music", 34),
+    image: photo("1500648767791-00dcc994a43e"),
     username: "@arjun.spins",
     mutuals: 7,
     bio: "Collecting obscure Marathi jazz. Open crate nights on weekends.",
@@ -272,7 +272,7 @@ export const content: ContentItem[] = [
     tag: "15 MUTUAL",
     weight: 1,
     imageQuery: "portrait,woman,designer",
-    image: img("portrait,woman,designer", 35),
+    image: photo("1544005313-94ddf0286df2"),
     username: "@priya.marks",
     mutuals: 15,
     bio: "Product design by day, sketch walks by evening.",
@@ -287,7 +287,7 @@ export const content: ContentItem[] = [
     tag: "9 MUTUAL",
     weight: 1,
     imageQuery: "portrait,man,cyclist",
-    image: img("portrait,man,cyclist", 36),
+    image: photo("1506794778202-cad84cf45f1d"),
     username: "@kabir.rides",
     mutuals: 9,
     bio: "Long rides out of Baner. Coffee stop non-negotiable.",
@@ -295,7 +295,7 @@ export const content: ContentItem[] = [
     following: 220,
   },
 
-  // Happenings (6)
+  // Happenings
   {
     id: "happening-1",
     kind: "happening",
@@ -304,7 +304,7 @@ export const content: ContentItem[] = [
     tag: "SAT · 8PM",
     weight: 4,
     imageQuery: "concert,band,stage",
-    image: img("concert,band,stage", 41),
+    image: photo("1470229722913-7c0e2dbbafd3"), // concert stage
     date: "Sat · 8:00 PM",
     venue: "Hard Rock Cafe, Bund Garden",
   },
@@ -316,7 +316,7 @@ export const content: ContentItem[] = [
     tag: "SUN · 9AM",
     weight: 2,
     imageQuery: "farmers,market,produce",
-    image: img("farmers,market,produce", 42),
+    image: photo("1488459716781-31db52582fe9"), // produce market
     date: "Sun · 9:00 AM",
     venue: "Baner Gaothan Ground",
   },
@@ -328,7 +328,7 @@ export const content: ContentItem[] = [
     tag: "FRI · 7PM",
     weight: 1,
     imageQuery: "poetry,microphone,cafe",
-    image: img("poetry,microphone,cafe", 43),
+    image: photo("1516280440612-82599195caee"), // microphone
     date: "Fri · 7:00 PM",
     venue: "Bookaroo Lounge, FC Road",
   },
@@ -340,7 +340,7 @@ export const content: ContentItem[] = [
     tag: "SAT · 6AM",
     weight: 1,
     imageQuery: "yoga,sunrise,park",
-    image: img("yoga,sunrise,park", 44),
+    image: photo("1544367567-0f2fcb009e0b"), // yoga
     date: "Sat · 6:00 AM",
     venue: "Osho Teerth Park",
   },
@@ -352,7 +352,7 @@ export const content: ContentItem[] = [
     tag: "THU · 6:30PM",
     weight: 3,
     imageQuery: "cinema,film,theater",
-    image: img("cinema,film,theater", 45),
+    image: photo("1489599849927-2ee91cede3ba"), // cinema seats
     date: "Thu · 6:30 PM",
     venue: "Alliance Française, Bund Garden",
   },
@@ -364,12 +364,12 @@ export const content: ContentItem[] = [
     tag: "WED · 7PM",
     weight: 1,
     imageQuery: "boardgame,friends,table",
-    image: img("boardgame,friends,table", 46),
+    image: photo("1632506008690-c7b948a7aaf4"), // board games
     date: "Wed · 7:00 PM",
     venue: "The Board Room, Viman Nagar",
   },
 
-  // Circles (6)
+  // Circles
   {
     id: "circle-1",
     kind: "circle",
@@ -378,12 +378,12 @@ export const content: ContentItem[] = [
     tag: "128 MEMBERS",
     weight: 3,
     imageQuery: "friends,group,hangout",
-    image: img("friends,group,hangout", 51),
+    image: photo("1529156069898-49953e39b3ac"), // friends group
     memberAvatars: [
-      img("portrait,person", 511),
-      img("portrait,person", 512),
-      img("portrait,person", 513),
-      img("portrait,person", 514),
+      photo("1494790108377-be9c29b29330"),
+      photo("1507003211169-0a1dd7228f2d"),
+      photo("1544005313-94ddf0286df2"),
+      photo("1500648767791-00dcc994a43e"),
     ],
     topic: "Urban walks",
   },
@@ -395,11 +395,11 @@ export const content: ContentItem[] = [
     tag: "64 MEMBERS",
     weight: 1,
     imageQuery: "coffee,friends,cafe",
-    image: img("coffee,friends,cafe", 52),
+    image: photo("1521017432531-fbd92d768814"), // cafe friends
     memberAvatars: [
-      img("portrait,person", 521),
-      img("portrait,person", 522),
-      img("portrait,person", 523),
+      photo("1438761681033-6461ffad8d80"),
+      photo("1506794778202-cad84cf45f1d"),
+      photo("1494790108377-be9c29b29330"),
     ],
     topic: "Coffee",
   },
@@ -411,12 +411,12 @@ export const content: ContentItem[] = [
     tag: "92 MEMBERS",
     weight: 2,
     imageQuery: "vinyl,records,music",
-    image: img("vinyl,records,music", 53),
+    image: photo("1519677100203-a0e668c92439"), // vinyl records
     memberAvatars: [
-      img("portrait,person", 531),
-      img("portrait,person", 532),
-      img("portrait,person", 533),
-      img("portrait,person", 534),
+      photo("1500648767791-00dcc994a43e"),
+      photo("1544005313-94ddf0286df2"),
+      photo("1507003211169-0a1dd7228f2d"),
+      photo("1438761681033-6461ffad8d80"),
     ],
     topic: "Music",
   },
@@ -428,12 +428,12 @@ export const content: ContentItem[] = [
     tag: "210 MEMBERS",
     weight: 4,
     imageQuery: "running,group,friends",
-    image: img("running,group,friends", 54),
+    image: photo("1476480862126-209bfaa8edc8"), // runners
     memberAvatars: [
-      img("portrait,person", 541),
-      img("portrait,person", 542),
-      img("portrait,person", 543),
-      img("portrait,person", 544),
+      photo("1506794778202-cad84cf45f1d"),
+      photo("1494790108377-be9c29b29330"),
+      photo("1507003211169-0a1dd7228f2d"),
+      photo("1544005313-94ddf0286df2"),
     ],
     topic: "Running",
   },
@@ -445,11 +445,11 @@ export const content: ContentItem[] = [
     tag: "45 MEMBERS",
     weight: 1,
     imageQuery: "design,sketch,friends",
-    image: img("design,sketch,friends", 55),
+    image: photo("1581291518633-83b4ebd1d83e"), // design desk
     memberAvatars: [
-      img("portrait,person", 551),
-      img("portrait,person", 552),
-      img("portrait,person", 553),
+      photo("1544005313-94ddf0286df2"),
+      photo("1438761681033-6461ffad8d80"),
+      photo("1500648767791-00dcc994a43e"),
     ],
     topic: "Design",
   },
@@ -461,18 +461,17 @@ export const content: ContentItem[] = [
     tag: "76 MEMBERS",
     weight: 1,
     imageQuery: "cycling,bikes,group",
-    image: img("cycling,bikes,group", 56),
+    image: photo("1541625602330-2277a4c46182"), // cycling
     memberAvatars: [
-      img("portrait,person", 561),
-      img("portrait,person", 562),
-      img("portrait,person", 563),
-      img("portrait,person", 564),
+      photo("1506794778202-cad84cf45f1d"),
+      photo("1507003211169-0a1dd7228f2d"),
+      photo("1494790108377-be9c29b29330"),
+      photo("1500648767791-00dcc994a43e"),
     ],
     topic: "Cycling",
   },
 ];
 
-/** Weight distribution check helper (~15% w4, ~25% w2|w3, rest w1) */
 export function weightStats(items: ContentItem[] = content) {
   const counts = { 1: 0, 2: 0, 3: 0, 4: 0 };
   items.forEach((i) => {

@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 type ToastProps = {
   message: string | null;
@@ -9,30 +10,40 @@ type ToastProps = {
 };
 
 export function Toast({ message, onDismiss }: ToastProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     if (!message) return;
-    const t = window.setTimeout(onDismiss, 2000);
+    const t = window.setTimeout(onDismiss, 2200);
     return () => window.clearTimeout(t);
   }, [message, onDismiss]);
 
-  return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-6 z-[60] flex justify-center px-4">
+  if (!mounted) return null;
+
+  return createPortal(
+    <div className="pointer-events-none fixed inset-x-0 bottom-8 z-[100] flex justify-center px-4">
       <AnimatePresence>
         {message && (
           <motion.div
             key={message}
             role="status"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
+            aria-live="polite"
+            initial={{ opacity: 0, y: 16, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="pointer-events-auto rounded-full border border-border-hairline bg-bg-surface px-4 py-2.5
-              text-sm text-text-primary shadow-card"
+            className="pointer-events-auto rounded-full border border-accent/40 bg-bg-surface px-5 py-3
+              text-sm font-medium text-text-primary shadow-card-lit"
           >
             {message}
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </div>,
+    document.body
   );
 }
