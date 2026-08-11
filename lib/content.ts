@@ -138,7 +138,7 @@ export const content: ContentItem[] = [
     tag: "₹180",
     weight: 2,
     imageQuery: "misal,spicy,curry",
-    image: photo("1585937421614-4a9987e7e018"), // Indian curry bowl
+    image: photo("1585937421612-70a008356fbe"), // Indian curry bowl
     cuisine: "Maharashtrian",
     priceLevel: 1,
   },
@@ -328,7 +328,7 @@ export const content: ContentItem[] = [
     tag: "FRI · 7PM",
     weight: 1,
     imageQuery: "poetry,microphone,cafe",
-    image: photo("1516280440612-82599195caee"), // microphone
+    image: photo("1511671782779-c97d3d27a1d4"), // microphone
     date: "Fri · 7:00 PM",
     venue: "Bookaroo Lounge, FC Road",
   },
@@ -364,7 +364,7 @@ export const content: ContentItem[] = [
     tag: "WED · 7PM",
     weight: 1,
     imageQuery: "boardgame,friends,table",
-    image: photo("1632506008690-c7b948a7aaf4"), // board games
+    image: photo("1529699211952-734e80c4d42b"), // board games / chess
     date: "Wed · 7:00 PM",
     venue: "The Board Room, Viman Nagar",
   },

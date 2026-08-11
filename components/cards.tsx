@@ -29,12 +29,12 @@ export function PlaceCard({
       onClick={onSelect}
       lit={lit}
     >
-      <div className="relative h-full w-full overflow-hidden rounded-inner">
+      <div className="relative h-full min-h-[72px] w-full overflow-hidden rounded-inner">
         <MediaImage
           src={item.image}
           fill
           sizes="(max-width:640px) 50vw, 25vw"
-          className="object-cover"
+          className="object-cover object-center"
         />
       </div>
     </Card>
@@ -55,12 +55,12 @@ export function BiteCard({
       onClick={onSelect}
       lit={lit}
     >
-      <div className="relative h-full w-full overflow-hidden rounded-inner">
+      <div className="relative h-full min-h-[72px] w-full overflow-hidden rounded-inner">
         <MediaImage
           src={item.image}
           fill
           sizes="(max-width:640px) 50vw, 25vw"
-          className="object-cover"
+          className="object-cover object-center"
         />
       </div>
     </Card>
@@ -125,12 +125,12 @@ export function HappeningCard({
       onClick={onSelect}
       lit={lit}
     >
-      <div className="relative h-full w-full overflow-hidden rounded-inner">
+      <div className="relative h-full min-h-[72px] w-full overflow-hidden rounded-inner">
         <MediaImage
           src={item.image}
           fill
           sizes="(max-width:640px) 50vw, 25vw"
-          className="object-cover"
+          className="object-cover object-center"
         />
         <span
           className="absolute bottom-2 left-2 rounded-full border border-border-hairline

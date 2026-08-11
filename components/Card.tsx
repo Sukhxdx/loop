@@ -34,9 +34,9 @@ export function Card({
       layoutId={layoutId ?? `card-${id}`}
       onClick={onClick}
       className={`
-        group relative flex h-full w-full flex-col overflow-hidden rounded-card
-        border bg-bg-surface p-4 text-left transition-[border-color,box-shadow,transform]
-        duration-300 focus-ring
+        group relative grid h-full w-full grid-rows-[minmax(0,1fr)_auto] gap-3
+        overflow-hidden rounded-card border bg-bg-surface p-4 text-left
+        transition-[border-color,box-shadow,transform] duration-300 focus-ring
         ${
           lit
             ? "border-accent shadow-card-lit -translate-y-1.5"
@@ -53,13 +53,13 @@ export function Card({
         {tag}
       </span>
 
-      {/* Media slot: fixed share of card height — never underlays the text block */}
-      <div className="relative z-10 mt-7 min-h-0 w-full flex-[0_0_58%] overflow-hidden">
+      {/* Top row: media only — fills remaining height, never overlaps text */}
+      <div className="relative z-10 min-h-0 w-full overflow-hidden pt-6">
         {children}
       </div>
 
-      {/* Text always below media, never shrinks away on tall/featured spans */}
-      <div className={`relative z-10 mt-3 shrink-0 pb-0.5 ${footer ? "pr-16" : "pr-1"}`}>
+      {/* Bottom row: title + subtitle always sit under the media */}
+      <div className={`relative z-10 min-w-0 ${footer ? "pr-16" : ""}`}>
         <h3 className="font-body text-sm font-medium leading-snug text-text-primary line-clamp-2">
           {title}
         </h3>

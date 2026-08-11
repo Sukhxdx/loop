@@ -1,8 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { X } from "lucide-react";
-import { useEffect } from "react";
+import { Check, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { ContentItem } from "@/lib/content";
 import { MediaImage } from "./MediaImage";
 
@@ -14,24 +14,36 @@ type DetailViewProps = {
 
 function PrimaryButton({
   label,
+  doneLabel,
   onClick,
 }: {
   label: string;
+  doneLabel: string;
   onClick: () => void;
 }) {
+  const [done, setDone] = useState(false);
+
   return (
     <button
       type="button"
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (done) return;
+        setDone(true);
         onClick();
       }}
       onPointerDown={(e) => e.stopPropagation()}
-      className="relative z-20 mt-6 w-full rounded-full bg-accent px-5 py-3 text-sm font-semibold text-bg-base
-        transition-opacity hover:opacity-90 active:opacity-80 focus-ring"
+      className={`relative z-20 mt-6 flex w-full items-center justify-center gap-2 rounded-full px-5 py-3
+        text-sm font-semibold transition-colors focus-ring
+        ${
+          done
+            ? "border border-accent/40 bg-accent-dim text-accent"
+            : "bg-accent text-bg-base hover:opacity-90 active:opacity-80"
+        }`}
     >
-      {label}
+      {done && <Check size={16} strokeWidth={2.5} />}
+      {done ? doneLabel : label}
     </button>
   );
 }
@@ -48,7 +60,12 @@ function DetailBody({
       return (
         <>
           <div className="relative mt-2 aspect-[4/3] w-full overflow-hidden rounded-inner">
-            <MediaImage src={item.image} fill className="object-cover" sizes="480px" />
+            <MediaImage
+              src={item.image}
+              fill
+              className="object-cover object-center"
+              sizes="480px"
+            />
           </div>
           <p className="mt-4 text-sm text-text-secondary">
             {item.neighborhood} · {item.category}
@@ -58,7 +75,8 @@ function DetailBody({
           </p>
           <PrimaryButton
             label="Get directions"
-            onClick={() => onAction("Directions coming soon")}
+            doneLabel="Directions ready"
+            onClick={() => onAction(`Directions ready for ${item.title}`)}
           />
         </>
       );
@@ -66,7 +84,12 @@ function DetailBody({
       return (
         <>
           <div className="relative mt-2 aspect-[4/3] w-full overflow-hidden rounded-inner">
-            <MediaImage src={item.image} fill className="object-cover" sizes="480px" />
+            <MediaImage
+              src={item.image}
+              fill
+              className="object-cover object-center"
+              sizes="480px"
+            />
           </div>
           <p className="mt-4 text-sm text-text-secondary">
             {item.cuisine} · {"₹".repeat(item.priceLevel)}
@@ -76,7 +99,8 @@ function DetailBody({
           </p>
           <PrimaryButton
             label="View menu"
-            onClick={() => onAction("Menu view coming soon")}
+            doneLabel="Menu opened"
+            onClick={() => onAction(`Menu opened for ${item.title}`)}
           />
         </>
       );
@@ -85,7 +109,12 @@ function DetailBody({
         <>
           <div className="mt-4 flex justify-center">
             <div className="relative h-28 w-28 overflow-hidden rounded-full border border-border-hairline">
-              <MediaImage src={item.image} fill className="object-cover" sizes="112px" />
+              <MediaImage
+                src={item.image}
+                fill
+                className="object-cover object-center"
+                sizes="112px"
+              />
             </div>
           </div>
           <p className="mt-4 text-center font-mono text-xs text-text-tertiary">
@@ -114,7 +143,8 @@ function DetailBody({
           </div>
           <PrimaryButton
             label="Follow"
-            onClick={() => onAction("Follow coming soon")}
+            doneLabel="Following"
+            onClick={() => onAction(`Following ${item.title}`)}
           />
         </>
       );
@@ -122,7 +152,12 @@ function DetailBody({
       return (
         <>
           <div className="relative mt-2 aspect-[4/3] w-full overflow-hidden rounded-inner">
-            <MediaImage src={item.image} fill className="object-cover" sizes="480px" />
+            <MediaImage
+              src={item.image}
+              fill
+              className="object-cover object-center"
+              sizes="480px"
+            />
           </div>
           <p className="mt-4 font-mono text-xs uppercase tracking-wide text-accent">
             {item.date}
@@ -133,7 +168,8 @@ function DetailBody({
           </p>
           <PrimaryButton
             label="Add to plans"
-            onClick={() => onAction("Add to plans coming soon")}
+            doneLabel="Added to plans"
+            onClick={() => onAction(`Added ${item.title} to your plans`)}
           />
         </>
       );
@@ -146,7 +182,12 @@ function DetailBody({
                 key={`${item.id}-m-${i}`}
                 className="relative aspect-square overflow-hidden rounded-full border border-border-hairline"
               >
-                <MediaImage src={src} fill className="object-cover" sizes="80px" />
+                <MediaImage
+                  src={src}
+                  fill
+                  className="object-cover object-center"
+                  sizes="80px"
+                />
               </div>
             ))}
           </div>
@@ -155,7 +196,8 @@ function DetailBody({
           </p>
           <PrimaryButton
             label="Join circle"
-            onClick={() => onAction("Join circle coming soon")}
+            doneLabel="Joined"
+            onClick={() => onAction(`Joined ${item.title}`)}
           />
         </>
       );
@@ -235,7 +277,7 @@ export function DetailView({ item, onClose, onAction }: DetailViewProps) {
             </div>
 
             <div className="overflow-y-auto px-5 py-5">
-              <DetailBody item={item} onAction={onAction} />
+              <DetailBody key={item.id} item={item} onAction={onAction} />
             </div>
           </motion.div>
         </div>
