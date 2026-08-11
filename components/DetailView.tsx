@@ -48,6 +48,57 @@ function PrimaryButton({
   );
 }
 
+function DetailFacts({ item }: { item: ContentItem }) {
+  const highlights = item.highlights ?? [];
+  return (
+    <div className="mt-4 space-y-4">
+      <p className="text-sm leading-relaxed text-text-secondary">{item.blurb}</p>
+
+      {(item.address || item.hours) && (
+        <div className="space-y-2 rounded-inner border border-border-hairline bg-bg-base/50 px-3.5 py-3">
+          {item.address && (
+            <p className="text-xs leading-relaxed text-text-secondary">
+              <span className="font-mono text-[10px] uppercase tracking-wide text-text-tertiary">
+                Address
+              </span>
+              <br />
+              <span className="text-text-primary">{item.address}</span>
+            </p>
+          )}
+          {item.hours && (
+            <p className="text-xs leading-relaxed text-text-secondary">
+              <span className="font-mono text-[10px] uppercase tracking-wide text-text-tertiary">
+                Hours
+              </span>
+              <br />
+              <span className="text-text-primary">{item.hours}</span>
+            </p>
+          )}
+        </div>
+      )}
+
+      {highlights.length > 0 && (
+        <div>
+          <p className="font-mono text-[10px] uppercase tracking-wide text-text-tertiary">
+            {item.kind === "bite" ? "Menu highlights" : "Good to know"}
+          </p>
+          <ul className="mt-2 space-y-1.5">
+            {highlights.map((line) => (
+              <li
+                key={line}
+                className="flex gap-2 text-sm leading-snug text-text-secondary"
+              >
+                <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-accent" />
+                <span>{line}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function DetailBody({
   item,
   onAction,
@@ -70,9 +121,7 @@ function DetailBody({
           <p className="mt-4 text-sm text-text-secondary">
             {item.neighborhood} · {item.category}
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-            {item.subtitle}. Open late most nights — worth the short walk from the main lane.
-          </p>
+          <DetailFacts item={item} />
           <PrimaryButton
             label="Get directions"
             doneLabel="Directions ready"
@@ -94,9 +143,7 @@ function DetailBody({
           <p className="mt-4 text-sm text-text-secondary">
             {item.cuisine} · {"₹".repeat(item.priceLevel)}
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-            {item.subtitle}. Expect a short wait during dinner rush.
-          </p>
+          <DetailFacts item={item} />
           <PrimaryButton
             label="View menu"
             doneLabel="Menu opened"
@@ -163,9 +210,7 @@ function DetailBody({
             {item.date}
           </p>
           <p className="mt-2 text-sm text-text-secondary">{item.venue}</p>
-          <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-            {item.subtitle}
-          </p>
+          <DetailFacts item={item} />
           <PrimaryButton
             label="Add to plans"
             doneLabel="Added to plans"
@@ -194,6 +239,11 @@ function DetailBody({
           <p className="mt-4 text-sm text-text-secondary">
             {item.topic} · {item.subtitle}
           </p>
+          {item.blurb && (
+            <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+              {item.blurb}
+            </p>
+          )}
           <PrimaryButton
             label="Join circle"
             doneLabel="Joined"
