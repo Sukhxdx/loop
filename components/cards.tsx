@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { Card } from "./Card";
+import { MediaImage } from "./MediaImage";
 import type {
   BiteItem,
   CircleItem,
@@ -30,9 +30,8 @@ export function PlaceCard({
       lit={lit}
     >
       <div className="relative mt-8 h-[58%] min-h-[72px] w-full flex-1 overflow-hidden rounded-inner">
-        <Image
+        <MediaImage
           src={item.image}
-          alt=""
           fill
           sizes="(max-width:640px) 50vw, 25vw"
           className="object-cover"
@@ -57,9 +56,8 @@ export function BiteCard({
       lit={lit}
     >
       <div className="relative mt-8 h-[58%] min-h-[72px] w-full flex-1 overflow-hidden rounded-inner">
-        <Image
+        <MediaImage
           src={item.image}
-          alt=""
           fill
           sizes="(max-width:640px) 50vw, 25vw"
           className="object-cover"
@@ -98,9 +96,8 @@ export function PersonCard({
     >
       <div className="mt-6 flex flex-1 items-center justify-center">
         <div className="relative h-20 w-20 overflow-hidden rounded-full border border-border-hairline sm:h-24 sm:w-24">
-          <Image
+          <MediaImage
             src={item.image}
-            alt=""
             fill
             sizes="96px"
             className="object-cover"
@@ -126,9 +123,8 @@ export function HappeningCard({
       lit={lit}
     >
       <div className="relative mt-8 h-[58%] min-h-[72px] w-full flex-1 overflow-hidden rounded-inner">
-        <Image
+        <MediaImage
           src={item.image}
-          alt=""
           fill
           sizes="(max-width:640px) 50vw, 25vw"
           className="object-cover"
@@ -173,7 +169,7 @@ export function CircleCard({
                 transform: `translateY(-50%) rotate(${(i - 1.5) * 6}deg)`,
               }}
             >
-              <Image src={src} alt="" fill sizes="56px" className="object-cover" />
+              <MediaImage src={src} fill sizes="56px" className="object-cover" />
             </div>
           ))}
         </div>

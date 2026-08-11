@@ -2,9 +2,9 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
-import Image from "next/image";
 import { useEffect } from "react";
 import type { ContentItem } from "@/lib/content";
+import { MediaImage } from "./MediaImage";
 
 type DetailViewProps = {
   item: ContentItem | null;
@@ -36,7 +36,7 @@ function DetailBody({ item }: { item: ContentItem }) {
       return (
         <>
           <div className="relative mt-2 aspect-[4/3] w-full overflow-hidden rounded-inner">
-            <Image src={item.image} alt="" fill className="object-cover" sizes="480px" />
+            <MediaImage src={item.image} fill className="object-cover" sizes="480px" />
           </div>
           <p className="mt-4 text-sm text-text-secondary">
             {item.neighborhood} · {item.category}
@@ -51,7 +51,7 @@ function DetailBody({ item }: { item: ContentItem }) {
       return (
         <>
           <div className="relative mt-2 aspect-[4/3] w-full overflow-hidden rounded-inner">
-            <Image src={item.image} alt="" fill className="object-cover" sizes="480px" />
+            <MediaImage src={item.image} fill className="object-cover" sizes="480px" />
           </div>
           <p className="mt-4 text-sm text-text-secondary">
             {item.cuisine} · {"₹".repeat(item.priceLevel)}
@@ -67,7 +67,7 @@ function DetailBody({ item }: { item: ContentItem }) {
         <>
           <div className="mt-4 flex justify-center">
             <div className="relative h-28 w-28 overflow-hidden rounded-full border border-border-hairline">
-              <Image src={item.image} alt="" fill className="object-cover" sizes="112px" />
+              <MediaImage src={item.image} fill className="object-cover" sizes="112px" />
             </div>
           </div>
           <p className="mt-4 text-center font-mono text-xs text-text-tertiary">
@@ -101,7 +101,7 @@ function DetailBody({ item }: { item: ContentItem }) {
       return (
         <>
           <div className="relative mt-2 aspect-[4/3] w-full overflow-hidden rounded-inner">
-            <Image src={item.image} alt="" fill className="object-cover" sizes="480px" />
+            <MediaImage src={item.image} fill className="object-cover" sizes="480px" />
           </div>
           <p className="mt-4 font-mono text-xs uppercase tracking-wide text-accent">
             {item.date}
@@ -122,7 +122,7 @@ function DetailBody({ item }: { item: ContentItem }) {
                 key={`${item.id}-m-${i}`}
                 className="relative aspect-square overflow-hidden rounded-full border border-border-hairline"
               >
-                <Image src={src} alt="" fill className="object-cover" sizes="80px" />
+                <MediaImage src={src} fill className="object-cover" sizes="80px" />
               </div>
             ))}
           </div>

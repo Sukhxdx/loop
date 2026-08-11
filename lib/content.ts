@@ -49,7 +49,19 @@ export type ContentItem =
   | HappeningItem
   | CircleItem;
 
-const img = (seed: string) => `https://picsum.photos/seed/${seed}/800/800`;
+/** Stable numeric id from seed — id URLs are faster than /seed/ (fewer hops). */
+function seedId(seed: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < seed.length; i++) {
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return ((h >>> 0) % 1000) + 1;
+}
+
+/** Request a mid-size master; custom loader downscales per layout slot. */
+const img = (seed: string) =>
+  `https://picsum.photos/id/${seedId(seed)}/480/480`;
 
 export const content: ContentItem[] = [
   // Places (6)
