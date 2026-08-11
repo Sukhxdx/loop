@@ -2,9 +2,10 @@
 const nextConfig = {
   images: {
     loader: "custom",
-    loaderFile: "./lib/picsumLoader.js",
-    // Keep patterns for any absolute URLs / future default-loader use
+    loaderFile: "./lib/imageLoader.js",
     remotePatterns: [
+      { protocol: "https", hostname: "loremflickr.com" },
+      { protocol: "https", hostname: "wsrv.nl" },
       { protocol: "https", hostname: "picsum.photos" },
       { protocol: "https", hostname: "fastly.picsum.photos" },
       { protocol: "https", hostname: "i.picsum.photos" },

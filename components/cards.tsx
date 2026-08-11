@@ -29,7 +29,7 @@ export function PlaceCard({
       onClick={onSelect}
       lit={lit}
     >
-      <div className="relative mt-8 h-[58%] min-h-[72px] w-full flex-1 overflow-hidden rounded-inner">
+      <div className="relative h-full w-full overflow-hidden rounded-inner">
         <MediaImage
           src={item.image}
           fill
@@ -55,7 +55,7 @@ export function BiteCard({
       onClick={onSelect}
       lit={lit}
     >
-      <div className="relative mt-8 h-[58%] min-h-[72px] w-full flex-1 overflow-hidden rounded-inner">
+      <div className="relative h-full w-full overflow-hidden rounded-inner">
         <MediaImage
           src={item.image}
           fill
@@ -94,8 +94,8 @@ export function PersonCard({
         </button>
       }
     >
-      <div className="mt-6 flex flex-1 items-center justify-center">
-        <div className="relative h-20 w-20 overflow-hidden rounded-full border border-border-hairline sm:h-24 sm:w-24">
+      <div className="flex h-full w-full items-center justify-center">
+        <div className="relative h-[72%] max-h-24 aspect-square overflow-hidden rounded-full border border-border-hairline">
           <MediaImage
             src={item.image}
             fill
@@ -122,7 +122,7 @@ export function HappeningCard({
       onClick={onSelect}
       lit={lit}
     >
-      <div className="relative mt-8 h-[58%] min-h-[72px] w-full flex-1 overflow-hidden rounded-inner">
+      <div className="relative h-full w-full overflow-hidden rounded-inner">
         <MediaImage
           src={item.image}
           fill
@@ -156,12 +156,12 @@ export function CircleCard({
       onClick={onSelect}
       lit={lit}
     >
-      <div className="mt-6 flex flex-1 items-center justify-center">
-        <div className="relative h-24 w-36">
+      <div className="flex h-full w-full items-center justify-center">
+        <div className="relative h-20 w-36">
           {avatars.map((src, i) => (
             <div
               key={`${item.id}-av-${i}`}
-              className="absolute top-1/2 h-14 w-14 -translate-y-1/2 overflow-hidden rounded-full
+              className="absolute top-1/2 h-14 w-14 overflow-hidden rounded-full
                 border-2 border-bg-surface shadow-card"
               style={{
                 left: `${i * 22}px`,

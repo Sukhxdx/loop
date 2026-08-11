@@ -2,9 +2,10 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { ContentItem } from "@/lib/content";
 import { MediaImage } from "./MediaImage";
+import { Toast } from "./Toast";
 
 type DetailViewProps = {
   item: ContentItem | null;
@@ -30,7 +31,13 @@ function PrimaryButton({
   );
 }
 
-function DetailBody({ item }: { item: ContentItem }) {
+function DetailBody({
+  item,
+  onAction,
+}: {
+  item: ContentItem;
+  onAction: (message: string) => void;
+}) {
   switch (item.kind) {
     case "place":
       return (
@@ -44,7 +51,10 @@ function DetailBody({ item }: { item: ContentItem }) {
           <p className="mt-2 text-sm leading-relaxed text-text-secondary">
             {item.subtitle}. Open late most nights — worth the short walk from the main lane.
           </p>
-          <PrimaryButton label="Get directions" />
+          <PrimaryButton
+            label="Get directions"
+            onClick={() => onAction("Directions coming soon")}
+          />
         </>
       );
     case "bite":
@@ -59,7 +69,10 @@ function DetailBody({ item }: { item: ContentItem }) {
           <p className="mt-2 text-sm leading-relaxed text-text-secondary">
             {item.subtitle}. Expect a short wait during dinner rush.
           </p>
-          <PrimaryButton label="View menu" />
+          <PrimaryButton
+            label="View menu"
+            onClick={() => onAction("Menu view coming soon")}
+          />
         </>
       );
     case "person":
@@ -94,7 +107,10 @@ function DetailBody({ item }: { item: ContentItem }) {
               <p className="text-xs text-text-tertiary">Mutuals</p>
             </div>
           </div>
-          <PrimaryButton label="Follow" />
+          <PrimaryButton
+            label="Follow"
+            onClick={() => onAction("Follow coming soon")}
+          />
         </>
       );
     case "happening":
@@ -110,7 +126,10 @@ function DetailBody({ item }: { item: ContentItem }) {
           <p className="mt-2 text-sm leading-relaxed text-text-secondary">
             {item.subtitle}
           </p>
-          <PrimaryButton label="Add to plans" />
+          <PrimaryButton
+            label="Add to plans"
+            onClick={() => onAction("Add to plans coming soon")}
+          />
         </>
       );
     case "circle":
@@ -129,7 +148,10 @@ function DetailBody({ item }: { item: ContentItem }) {
           <p className="mt-4 text-sm text-text-secondary">
             {item.topic} · {item.subtitle}
           </p>
-          <PrimaryButton label="Join circle" />
+          <PrimaryButton
+            label="Join circle"
+            onClick={() => onAction("Join circle coming soon")}
+          />
         </>
       );
   }
@@ -137,6 +159,8 @@ function DetailBody({ item }: { item: ContentItem }) {
 
 export function DetailView({ item, onClose }: DetailViewProps) {
   const reduceMotion = useReducedMotion();
+  const [toast, setToast] = useState<string | null>(null);
+  const dismissToast = useCallback(() => setToast(null), []);
 
   useEffect(() => {
     if (!item) return;
@@ -152,67 +176,75 @@ export function DetailView({ item, onClose }: DetailViewProps) {
     };
   }, [item, onClose]);
 
+  useEffect(() => {
+    setToast(null);
+  }, [item?.id]);
+
   return (
-    <AnimatePresence>
-      {item && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-6">
-          <motion.button
-            type="button"
-            aria-label="Close detail"
-            className="absolute inset-0 bg-black/60 focus-ring"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-          />
+    <>
+      <AnimatePresence>
+        {item && (
+          <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-6">
+            <motion.button
+              type="button"
+              aria-label="Close detail"
+              className="absolute inset-0 bg-black/60 focus-ring"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={onClose}
+            />
 
-          <motion.div
-            layoutId={`card-${item.id}`}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={`detail-title-${item.id}`}
-            className="relative z-10 flex max-h-[88vh] w-full max-w-lg flex-col overflow-hidden
-              rounded-t-card border border-border-hairline bg-bg-surface shadow-card-lit
-              sm:rounded-card"
-            initial={reduceMotion ? false : { y: 24, opacity: 0.96 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={reduceMotion ? { opacity: 0 } : { y: 16, opacity: 0 }}
-            transition={
-              reduceMotion
-                ? { duration: 0.15 }
-                : { type: "spring", stiffness: 320, damping: 32 }
-            }
-          >
-            <div className="flex items-start justify-between gap-4 border-b border-border-hairline px-5 py-4">
-              <div className="min-w-0">
-                <span className="inline-block rounded-full border border-border-hairline bg-bg-base/80 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-wide text-accent">
-                  {item.tag}
-                </span>
-                <h2
-                  id={`detail-title-${item.id}`}
-                  className="mt-3 font-display text-3xl leading-tight text-text-primary"
+            <motion.div
+              layoutId={`card-${item.id}`}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={`detail-title-${item.id}`}
+              className="relative z-10 flex max-h-[88vh] w-full max-w-lg flex-col overflow-hidden
+                rounded-t-card border border-border-hairline bg-bg-surface shadow-card-lit
+                sm:rounded-card"
+              initial={reduceMotion ? false : { y: 24, opacity: 0.96 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={reduceMotion ? { opacity: 0 } : { y: 16, opacity: 0 }}
+              transition={
+                reduceMotion
+                  ? { duration: 0.15 }
+                  : { type: "spring", stiffness: 320, damping: 32 }
+              }
+            >
+              <div className="flex items-start justify-between gap-4 border-b border-border-hairline px-5 py-4">
+                <div className="min-w-0">
+                  <span className="inline-block rounded-full border border-border-hairline bg-bg-base/80 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-wide text-accent">
+                    {item.tag}
+                  </span>
+                  <h2
+                    id={`detail-title-${item.id}`}
+                    className="mt-3 font-display text-3xl leading-tight text-text-primary"
+                  >
+                    {item.title}
+                  </h2>
+                  <p className="mt-1 text-sm text-text-secondary">{item.subtitle}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="shrink-0 rounded-full border border-border-hairline p-2 text-text-secondary
+                    transition-colors hover:border-accent/40 hover:text-text-primary focus-ring"
+                  aria-label="Close"
                 >
-                  {item.title}
-                </h2>
-                <p className="mt-1 text-sm text-text-secondary">{item.subtitle}</p>
+                  <X size={18} />
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={onClose}
-                className="shrink-0 rounded-full border border-border-hairline p-2 text-text-secondary
-                  transition-colors hover:border-accent/40 hover:text-text-primary focus-ring"
-                aria-label="Close"
-              >
-                <X size={18} />
-              </button>
-            </div>
 
-            <div className="overflow-y-auto px-5 py-5">
-              <DetailBody item={item} />
-            </div>
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>
+              <div className="overflow-y-auto px-5 py-5">
+                <DetailBody item={item} onAction={setToast} />
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      <Toast message={toast} onDismiss={dismissToast} />
+    </>
   );
 }

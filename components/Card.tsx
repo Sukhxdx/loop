@@ -53,9 +53,13 @@ export function Card({
         {tag}
       </span>
 
-      <div className="relative z-10 flex min-h-0 flex-1 flex-col">{children}</div>
+      {/* Media slot: fixed share of card height — never underlays the text block */}
+      <div className="relative z-10 mt-7 min-h-0 w-full flex-[0_0_58%] overflow-hidden">
+        {children}
+      </div>
 
-      <div className="relative z-10 mt-3 pr-1">
+      {/* Text always below media, never shrinks away on tall/featured spans */}
+      <div className={`relative z-10 mt-3 shrink-0 pb-0.5 ${footer ? "pr-16" : "pr-1"}`}>
         <h3 className="font-body text-sm font-medium leading-snug text-text-primary line-clamp-2">
           {title}
         </h3>
